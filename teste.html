@@ -1,0 +1,877 @@
+<!DOCTYPE html><html lang="pt-BR" class="dark scroll-smooth"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUTO CARE — Revisão de Carro Programável</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#FF6B2C',
+        'on-primary': '#0B0F14',
+        'secondary': '#1E2633',
+        'on-secondary': '#F3F4F6',
+        'accent': '#FF7844',
+        'on-accent': '#0B0F14',
+        'success': '#10B981',
+        'on-success': '#393939',
+        'warning': '#F59E0B',
+        'on-warning': '#0B0F14',
+        'error': '#EF4444',
+        'on-error': '#1C1C1C',
+        'card-bg': '#121924',
+        'card-border': '#1E293B',
+        'panel-bg': '#0E141C',
+        'footer-bg': '#070A0E',
+        'light-surface': '#0D1117',
+        'light-on-surface': '#F3F4F6',
+        'light-surface-container': '#161D26',
+        'light-surface-container-high': '#1F2937',
+        'light-outline': '#2E3A4B',
+        'dark-surface': '#0B0F14',
+        'dark-on-surface': '#F9FAFB',
+        'dark-surface-container': '#151B24',
+        'dark-surface-container-high': '#1D2532',
+        'dark-outline': '#2B3747',
+      },
+      borderRadius: {
+        'sm': '4px',
+        'DEFAULT': '8px',
+        'md': '10px',
+        'lg': '16px',
+        'xl': '24px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '64px',
+        'page-margin': '24px',
+      },
+      fontFamily: {
+        'display': ['"Cinzel"', 'sans-serif'],
+        'headline': ['"Cinzel"', 'sans-serif'],
+        'body': ['"Instrument Sans"', 'sans-serif'],
+        'label': ['"Instrument Sans"', 'sans-serif'],
+      },
+      fontSize: {
+        'display-lg': ['52px', { lineHeight: '60px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'display-lg-mobile': ['32px', { lineHeight: '38px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-xl': ['40px', { lineHeight: '48px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-xl-mobile': ['28px', { lineHeight: '34px', letterSpacing: '0px', fontWeight: '700' }],
+        'headline-lg': ['30px', { lineHeight: '38px', letterSpacing: '0px', fontWeight: '700' }],
+        'headline-lg-mobile': ['24px', { lineHeight: '30px', letterSpacing: '0px', fontWeight: '700' }],
+        'headline-md': ['20px', { lineHeight: '26px', letterSpacing: '0.5px', fontWeight: '700' }],
+        'headline-sm': ['16px', { lineHeight: '22px', letterSpacing: '0.5px', fontWeight: '600' }],
+        'body-lg': ['18px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['15px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-sm': ['13px', { lineHeight: '18px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.75px', fontWeight: '600' }],
+        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.5px', fontWeight: '600' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'surface-enter': '250ms',
+        'surface-exit': '150ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'surface-enter': '0ms',
+        'surface-exit': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'surface-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'surface-exit': 'cubic-bezier(0.3, 0, 1, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-dark-surface text-dark-on-surface font-body antialiased min-h-[1024px] flex flex-col selection:bg-primary selection:text-on-primary" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+  <!-- TOP HEADER / BRAND BAR -->
+  <header class="sticky top-0 z-50 bg-dark-surface/95 backdrop-blur-md border-b border-secondary">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      
+      <!-- LOGO: AUTO CARE IDENTICAL TO IMAGE -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="text-primary transition-transform group-hover:scale-105 duration-state-change">
+          <!-- Crossed Wrenches SVG Icon exactly like prompt image -->
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+          </svg>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-headline text-headline-sm uppercase font-bold text-dark-on-surface tracking-wider">AUTO</span>
+          <span class="font-headline text-headline-sm uppercase font-bold text-primary tracking-wider">CARE</span>
+        </div>
+      </a>
+
+      <!-- NAVIGATION LINKS (Link "Oficina" removido) -->
+      <nav class="hidden md:flex items-center gap-8 text-label-lg font-medium tracking-wide">
+        <a href="#hero" class="text-white hover:text-primary transition-colors">Início</a>
+        <a href="#servicos" class="text-slate-300 hover:text-primary transition-colors">Serviços</a>
+        <a href="#diferenciais" class="text-slate-300 hover:text-primary transition-colors">Diferenciais</a>
+        <a href="#depoimentos" class="text-slate-300 hover:text-primary transition-colors">Avaliações</a>
+      </nav>
+
+      <!-- HEADER ACTIONS (Botão de Agendar substituído por Log-in com ícone) -->
+      <div class="flex items-center gap-4">
+        <a href="tel:+551199999999" class="hidden lg:flex items-center gap-2 text-label-md text-slate-300 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-primary text-[18px]">phone_in_talk</span>
+          <span class="font-semibold tabular-nums">(11) 98765-4321</span>
+        </a>
+        <button id="btn-login" type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-accent text-on-primary font-semibold text-label-md rounded-md transition-all duration-state-change shadow-lg shadow-primary/20 active:scale-95 cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">account_circle</span>
+          <span data-design-text-token="label-md">Log-in</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO SECTION WITH OPEN ENGINE PHOTO -->
+  <section id="hero" class="relative overflow-hidden bg-black">
+    <!-- BACKGROUND ENGINE IMAGE WITH DUAL OVERLAY (DARK GRADIENT TO MATCH IMAGE) -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://lh3.googleusercontent.com/aida/ALJJyrAY_8lSeQNBX7b2t2xvbk3svvm3d0cSQtw1TuOLmGP4bPOz68OZet1_6Ad1gQzJcrrr6lLNoaS8nxRylVqa2peupdK-ywX-PAc6SXg2Rcne5Tq9sbxmF_O0tb2f-WsIGIuaiBpcorD3F2V2UGbiz_r_bZJ1xAsz2q9YgV54_R1PNb7PKzjbljuzZlHd33jkIhuTDJysC2SF9tEDWbNJm4EDIAWXsX5w86WrE9DsI9bO-2isY0ITGkJoGd4" alt="Motor de carro aberto sob manutenção e revisão na Auto Care" class="w-full h-full object-cover object-center filter brightness-75 contrast-125">
+      <!-- Cinematic Vignette & Gradient Overlays like in the prompt graphic -->
+      <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-dark-surface via-transparent to-black/60"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-24 md:py-32 lg:py-36 min-h-[640px] flex flex-col justify-center">
+      
+      <!-- HERO TEXT CONTAINER -->
+      <div class="max-w-2xl space-y-6">
+        
+        <!-- BADGE / SUBTITLE CATEGORY -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-surface-container/90 border border-dark-outline backdrop-blur-sm">
+          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          <span class="text-label-md uppercase font-semibold text-slate-200" data-design-text-token="label-md">Centro Automotivo Especializado</span>
+        </div>
+
+        <!-- HERO HEADLINE (EXACT TITLE FROM REFERENCE IMAGE) -->
+        <h1 class="font-headline text-display-lg-mobile md:text-display-lg font-bold text-white uppercase" data-design-text-token="display-lg">
+          REVISÃO DE CARRO <br class="hidden sm:inline">
+          <span class="text-white">PROGRAMÁVEL</span>
+        </h1>
+
+        <!-- HERO DESCRIPTION (EXACT TEXT FROM REFERENCE IMAGE) -->
+        <p class="font-body text-slate-300 text-body-lg font-normal leading-relaxed max-w-xl" data-design-text-token="body-lg">
+          Mecânica multimarcas, diagnóstico computadorizado e revisão preventiva com garantia técnica.
+        </p>
+
+        <!-- CTA BUTTONS & TRUST SIGNALS -->
+        <div class="pt-4 flex flex-wrap items-center gap-4">
+          <button type="button" onclick="document.getElementById('servicos').scrollIntoView({behavior: 'smooth'})" class="px-7 py-3.5 bg-primary hover:bg-accent text-on-primary font-semibold text-label-lg rounded-md transition-all shadow-xl shadow-primary/25 hover:shadow-primary/40 active:scale-95 flex items-center gap-2 cursor-pointer">
+            <span data-design-text-token="label-lg">Ver Nossos Serviços</span>
+            <span class="material-symbols-outlined text-[20px]">arrow_downward</span>
+          </button>
+          
+          <button type="button" onclick="openScheduleModal('Diagnóstico Computadorizado Geral')" class="px-6 py-3.5 bg-dark-surface-container hover:bg-dark-surface-container-high border border-dark-outline hover:border-primary text-white font-medium text-label-lg rounded-md transition-all flex items-center gap-2 cursor-pointer">
+            <span class="material-symbols-outlined text-primary text-[20px]">speed</span>
+            <span data-design-text-token="label-lg">Solicitar Orçamento</span>
+          </button>
+        </div>
+
+        <!-- QUICK STATS PILLS -->
+        <div class="pt-8 grid grid-cols-3 gap-6 border-t border-dark-outline max-w-lg">
+          <div>
+            <span class="block font-headline text-headline-lg font-bold text-white tabular-nums" data-design-text-token="headline-lg">+15.000</span>
+            <span class="text-label-md text-slate-400" data-design-text-token="label-md">Veículos Revisados</span>
+          </div>
+          <div>
+            <span class="block font-headline text-headline-lg font-bold text-primary tabular-nums" data-design-text-token="headline-lg">100%</span>
+            <span class="text-label-md text-slate-400" data-design-text-token="label-md">Peças Originais</span>
+          </div>
+          <div>
+            <span class="block font-headline text-headline-lg font-bold text-white tabular-nums" data-design-text-token="headline-lg">Garantia</span>
+            <span class="text-label-md text-slate-400" data-design-text-token="label-md">Total em Serviços</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+   <!-- NOSSOS SERVICOS SECTION (FAITHFUL REPRODUCTION OF CARDS FROM PROMPT IMAGE) -->
+  <section id="servicos" class="py-20 md:py-28 bg-dark-surface relative">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <!-- SECTION HEADER (EXACT TYPOGRAPHY & CASING) -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <h2 class="font-headline text-headline-xl-mobile md:text-headline-xl font-bold text-white uppercase tracking-wider" data-design-text-token="headline-xl">
+          NOSSOS SERVIÇOS
+        </h2>
+        <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+        <p class="font-body text-slate-400 text-body-lg" data-design-text-token="body-lg">
+          Excelência em manutenção mecânica, preventiva e corretiva com tecnologia de ponta.
+        </p>
+      </div>
+
+      <!-- 6 SERVICES GRID (MATCHING THE 2x3 LAYOUT AND ICONOGRAPHY FROM USER IMAGE) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        
+        <!-- CARD 1: DIAGNOSTICO AVANÇADO -->
+        <article data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="group bg-card-bg border border-card-border hover:border-primary/60 p-7 rounded-md transition-all duration-state-change hover:-translate-y-1 shadow-lg hover:shadow-primary/10 flex flex-col justify-between">
+          <div class="space-y-4">
+            <!-- Icon 1: Tools / Wrench & Screwdriver -->
+            <div class="w-12 h-12 text-primary group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                <path d="M4 20l4-4"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-headline text-headline-sm font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors" data-design-text-token="headline-sm">
+                DIAGNOSTICO AVANÇADO
+              </h3>
+              <p class="font-body text-body-md leading-relaxed text-slate-300" data-design-text-token="body-md">
+                Utilizamos equipamentos de ótima qualidade para identificar problemas com precisão.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-card-border flex items-center justify-between">
+            <span class="text-label-md uppercase tracking-wider text-slate-400 font-medium" data-design-text-token="label-md">Scanner OBD2 &amp; Osciloscópio</span>
+            <button type="button" onclick="openScheduleModal(&#39;Diagnóstico Avançado&#39;)" class="text-label-md font-semibold text-primary hover:text-white flex items-center gap-1 transition-colors cursor-pointer">
+              <span data-design-text-token="label-md">Agendar</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- CARD 2: TROCA DE OLEO E FILTRO -->
+        <article data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="group bg-card-bg border border-card-border hover:border-primary/60 p-7 rounded-md transition-all duration-state-change hover:-translate-y-1 shadow-lg hover:shadow-primary/10 flex flex-col justify-between">
+          <div class="space-y-4">
+            <!-- Icon 2: Oil can / Gas pump dispenser -->
+            <div class="w-12 h-12 text-primary group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 13V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"></path>
+                <path d="M11 7h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4"></path>
+                <path d="M19 13l2 2v4a1 1 0 0 1-1 1h-2"></path>
+                <circle cx="7" cy="14" r="1.5" fill="currentColor"></circle>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-headline text-headline-sm font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors" data-design-text-token="headline-sm">
+                TROCA DE OLEO E FILTRO
+              </h3>
+              <p class="font-body text-body-md leading-relaxed text-slate-300" data-design-text-token="body-md">
+                Manutenção preventiva essencial para a longevidade do seu motor.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-card-border flex items-center justify-between">
+            <span class="text-label-md uppercase tracking-wider text-slate-400 font-medium" data-design-text-token="label-md">Lubrificantes Sintéticos</span>
+            <button type="button" onclick="openScheduleModal(&#39;Troca de Óleo e Filtro&#39;)" class="text-label-md font-semibold text-primary hover:text-white flex items-center gap-1 transition-colors cursor-pointer">
+              <span data-design-text-token="label-md">Agendar</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- CARD 3: SISTEMA ELETRICO -->
+        <article data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="group bg-card-bg border border-card-border hover:border-primary/60 p-7 rounded-md transition-all duration-state-change hover:-translate-y-1 shadow-lg hover:shadow-primary/10 flex flex-col justify-between">
+          <div class="space-y-4">
+            <!-- Icon 3: Car Battery with + and - terminals -->
+            <div class="w-12 h-12 text-primary group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="13" rx="2"></rect>
+                <path d="M6 7V4h3v3"></path>
+                <path d="M15 7V4h3v3"></path>
+                <line x1="5" y1="12" x2="9" y2="12"></line>
+                <line x1="7" y1="10" x2="7" y2="14"></line>
+                <line x1="15" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-headline text-headline-sm font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors" data-design-text-token="headline-sm">
+                SISTEMA ELETRICO
+              </h3>
+              <p class="font-body text-body-md leading-relaxed text-slate-300" data-design-text-token="body-md">
+                Reparo em baterias, alternadores, motores de arranque e fiação.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-card-border flex items-center justify-between">
+            <span class="text-label-md uppercase tracking-wider text-slate-400 font-medium" data-design-text-token="label-md">Baterias &amp; Alternadores</span>
+            <button type="button" onclick="openScheduleModal(&#39;Sistema Elétrico&#39;)" class="text-label-md font-semibold text-primary hover:text-white flex items-center gap-1 transition-colors cursor-pointer">
+              <span data-design-text-token="label-md">Agendar</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- CARD 4: REPARO NO MOTOR -->
+        <article data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="group bg-card-bg border border-card-border hover:border-primary/60 p-7 rounded-md transition-all duration-state-change hover:-translate-y-1 shadow-lg hover:shadow-primary/10 flex flex-col justify-between">
+          <div class="space-y-4">
+            <!-- Icon 4: Engine block with wrench -->
+            <div class="w-12 h-12 text-primary group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 10h16v8H4z"></path>
+                <path d="M8 10V6h8v4"></path>
+                <path d="M2 14h2"></path>
+                <path d="M20 14h2"></path>
+                <path d="M6 18v3"></path>
+                <path d="M18 18v3"></path>
+                <circle cx="12" cy="14" r="2"></circle>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-headline text-headline-sm font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors" data-design-text-token="headline-sm">
+                REPARO NO MOTOR
+              </h3>
+              <p class="font-body text-body-md leading-relaxed text-slate-300" data-design-text-token="body-md">
+                Serviços completos de motor, desde ajustes a reconstruções completas.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-card-border flex items-center justify-between">
+            <span class="text-label-md uppercase tracking-wider text-slate-400 font-medium" data-design-text-token="label-md">Cabeçote, Bloco &amp; Pistões</span>
+            <button type="button" onclick="openScheduleModal(&#39;Reparo no Motor&#39;)" class="text-label-md font-semibold text-primary hover:text-white flex items-center gap-1 transition-colors cursor-pointer">
+              <span data-design-text-token="label-md">Agendar</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- CARD 5: FREIO E SUSPENSÃO -->
+        <article data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="group bg-card-bg border border-card-border hover:border-primary/60 p-7 rounded-md transition-all duration-state-change hover:-translate-y-1 shadow-lg hover:shadow-primary/10 flex flex-col justify-between">
+          <div class="space-y-4">
+            <!-- Icon 5: Brake disc / Wheel -->
+            <div class="w-12 h-12 text-primary group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"></circle>
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 3v3"></path>
+                <path d="M12 18v3"></path>
+                <path d="M3 12h3"></path>
+                <path d="M18 12h3"></path>
+                <path d="M5.6 5.6l2.1 2.1"></path>
+                <path d="M16.3 16.3l2.1 2.1"></path>
+                <path d="M5.6 18.4l2.1-2.1"></path>
+                <path d="M16.3 7.7l2.1-2.1"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-headline text-headline-sm font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors" data-design-text-token="headline-sm">
+                FREIO E SUSPENSÃO
+              </h3>
+              <p class="font-body text-body-md leading-relaxed text-slate-300" data-design-text-token="body-md">
+                Inspeção e substituição de pastilhas, discos e componentes da suspensão.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-card-border flex items-center justify-between">
+            <span class="text-label-md uppercase tracking-wider text-slate-400 font-medium" data-design-text-token="label-md">Amortecedores &amp; Discos</span>
+            <button type="button" onclick="openScheduleModal(&#39;Freio e Suspensão&#39;)" class="text-label-md font-semibold text-primary hover:text-white flex items-center gap-1 transition-colors cursor-pointer">
+              <span data-design-text-token="label-md">Agendar</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- CARD 6: TRANSMISSÃO -->
+        <article data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="group bg-card-bg border border-card-border hover:border-primary/60 p-7 rounded-md transition-all duration-state-change hover:-translate-y-1 shadow-lg hover:shadow-primary/10 flex flex-col justify-between">
+          <div class="space-y-4">
+            <!-- Icon 6: Cogwheel / Transmission Gear -->
+            <div class="w-12 h-12 text-primary group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-headline text-headline-sm font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors" data-design-text-token="headline-sm">
+                TRANSMISSÃO
+              </h3>
+              <p class="font-body text-body-md leading-relaxed text-slate-300" data-design-text-token="body-md">
+                Manutenção e reparo de transmissão manuais e automáticas.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-card-border flex items-center justify-between">
+            <span class="text-label-md uppercase tracking-wider text-slate-400 font-medium" data-design-text-token="label-md">Câmbio Manual &amp; Automático</span>
+            <button type="button" onclick="openScheduleModal(&#39;Transmissão&#39;)" class="text-label-md font-semibold text-primary hover:text-white flex items-center gap-1 transition-colors cursor-pointer">
+              <span data-design-text-token="label-md">Agendar</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE DIAGNOSTIC SIMULATOR / INSPECTION SECTION -->
+  <section id="diferenciais" class="py-20 bg-panel-bg border-y border-secondary">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- LEFT: TEXT INFO -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="inline-flex items-center gap-2 text-primary font-semibold text-label-md uppercase tracking-wider">
+            <span class="material-symbols-outlined text-[20px]">verified</span>
+            <span data-design-text-token="label-md">Padrão Concessionária Sem Preço Abusivo</span>
+          </div>
+
+          <h2 class="font-headline text-headline-xl-mobile md:text-headline-xl font-bold text-white" data-design-text-token="headline-xl">
+            COMO FUNCIONA A NOSSA <br>
+            <span class="text-primary">REVISÃO PROGRAMÁVEL?</span>
+          </h2>
+
+          <p class="font-body text-slate-300 leading-relaxed text-body-lg" data-design-text-token="body-lg">
+            Diferente de oficinas tradicionais que trocam peças sem comprovação, na Auto Care conectamos scanners de telemetria automotiva de última geração e entregamos um relatório digital transparente com fotos, vídeos e laudo técnico de cada componente inspecionado.
+          </p>
+
+          <ul class="space-y-4 pt-2">
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-[16px]">check</span>
+              </div>
+              <span class="text-slate-300 text-body-sm font-medium" data-design-text-token="body-sm"><strong>Checklist de mais de 75 itens vitais:</strong> Injeção eletrônica, arrefecimento, estepe, suspensão e freios.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-[16px]">check</span>
+              </div>
+              <span class="text-slate-300 text-body-sm font-medium" data-design-text-token="body-sm"><strong>Aprovação prévia via WhatsApp:</strong> Nada é realizado sem o seu consentimento detalhado.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-[16px]">check</span>
+              </div>
+              <span class="text-slate-300 text-body-sm font-medium" data-design-text-token="body-sm"><strong>Peças com rastreabilidade e nota fiscal:</strong> Peças originais de fábrica ou primeira linha certificada.</span>
+            </li>
+          </ul>
+
+          <div class="pt-4">
+            <button type="button" onclick="openScheduleModal(&#39;Revisão Programada 75+ Itens&#39;)" class="px-6 py-3.5 bg-primary hover:bg-accent text-on-primary font-bold text-label-lg rounded-md transition-all shadow-md active:scale-95 cursor-pointer">
+              <span data-design-text-token="label-lg">Simular Revisão do Meu Veículo</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: INTERACTIVE REVISÃO CALCULATOR CARD -->
+        <div class="lg:col-span-6">
+          <div class="bg-card-bg border border-card-border rounded-lg p-7 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-card-border">
+              <div>
+                <h3 class="font-headline text-headline-sm font-bold text-white uppercase" data-design-text-token="headline-sm">Planeje a Próxima Parada</h3>
+                <p class="text-label-md text-slate-400" data-design-text-token="label-md">Selecione a quilometragem atual do seu carro</p>
+              </div>
+              <span class="material-symbols-outlined text-primary text-[28px]">tune</span>
+            </div>
+
+            <!-- TAB SELECTOR FOR KILOMETERS -->
+            <div class="space-y-4">
+              <label class="block text-label-md uppercase font-semibold text-slate-300">Quilometragem recomendada:</label>
+              <div class="grid grid-cols-4 gap-2">
+                <button type="button" onclick="selectKm(10, this)" class="km-btn py-2 px-3 text-label-md font-semibold rounded bg-secondary text-slate-300 hover:bg-primary hover:text-black transition-colors border border-card-border active">10.000 km</button>
+                <button type="button" onclick="selectKm(30, this)" class="km-btn py-2 px-3 text-label-md font-semibold rounded bg-secondary text-slate-300 hover:bg-primary hover:text-black transition-colors border border-card-border">30.000 km</button>
+                <button type="button" onclick="selectKm(50, this)" class="km-btn py-2 px-3 text-label-md font-semibold rounded bg-secondary text-slate-300 hover:bg-primary hover:text-black transition-colors border border-card-border">50.000 km</button>
+                <button type="button" onclick="selectKm(80, this)" class="km-btn py-2 px-3 text-label-md font-semibold rounded bg-secondary text-slate-300 hover:bg-primary hover:text-black transition-colors border border-card-border">80.000 km</button>
+              </div>
+            </div>
+
+            <!-- RESULT ITEMS BOX DYNAMIC -->
+            <div id="km-details" class="bg-dark-surface border border-secondary rounded p-4 space-y-2">
+              <div class="flex items-center justify-between text-label-md font-semibold text-primary">
+                <span>ITENS INCLUSOS NESTE PACOTE</span>
+                <span class="text-white">Estimativa: 2h30</span>
+              </div>
+              <ul id="km-list" class="text-body-sm text-slate-300 space-y-1.5 pt-1">
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span> Substituição de Óleo 100% Sintético + Filtro de Óleo</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span> Filtro de Ar do Motor e Filtro do Ar Condicionado</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span> Inspeção de pastilhas de freio, discos e fluido DOT 4</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span> Scanner eletrônico de injeção e sensores</li>
+              </ul>
+            </div>
+
+            <!-- SUMMARY ACTION -->
+            <div class="flex items-center justify-between pt-2">
+              <div>
+                <span class="block text-label-md text-slate-400 uppercase">Valores a partir de</span>
+                <span id="km-price" class="text-headline-md font-bold font-headline text-white tabular-nums">R$ 380,00</span>
+              </div>
+              <button type="button" onclick="openScheduleModal(&#39;Revisão Programada - Selecionada&#39;)" class="px-5 py-2.5 bg-primary text-on-primary font-semibold text-label-md uppercase rounded hover:bg-accent transition-colors cursor-pointer">
+                <span data-design-text-token="label-md">Reservar Vaga no Box</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUSTOMER TESTIMONIALS / PROOF -->
+  <section id="depoimentos" class="py-20 bg-dark-surface">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-primary font-semibold text-label-md uppercase">Confiança Comprovada</span>
+          <h2 class="font-headline text-headline-lg font-bold text-white mt-1" data-design-text-token="headline-lg">O QUE DIZEM NOSSOS CLIENTES</h2>
+        </div>
+        <div class="mt-4 md:mt-0 flex items-center gap-2 text-warning text-label-lg">
+          <div class="flex">
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+          </div>
+          <span class="font-bold text-white tabular-nums">4.9 / 5.0</span>
+          <span class="text-slate-400 text-label-md">(+1.200 avaliações no Google)</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="bg-card-bg border border-card-border p-6 rounded-md space-y-4">
+          <div class="flex text-warning">
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+          </div>
+          <p class="text-body-sm text-slate-300 italic" data-design-text-token="body-sm">
+            &#34;Levei meu Civic para diagnóstico de falha no motor que duas outras oficinas não descobriram. A Auto Care encontrou o sensor com defeito em menos de 1 hora. Transparência impecável!&#34;
+          </p>
+          <div class="pt-2 border-t border-card-border">
+            <p class="text-body-sm font-semibold text-white">Rodrigo Silveira</p>
+            <p class="text-label-md text-slate-400">Honda Civic Touring</p>
+          </div>
+        </div>
+
+        <div class="bg-card-bg border border-card-border p-6 rounded-md space-y-4">
+          <div class="flex text-warning">
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+          </div>
+          <p class="text-body-sm text-slate-300 italic" data-design-text-token="body-sm">
+            &#34;Revisão programável dos 50.000km feita no mesmo dia com laudo fotográfico no WhatsApp. Preço justo e ambiente de oficina limpo de primeiro mundo.&#34;
+          </p>
+          <div class="pt-2 border-t border-card-border">
+            <p class="text-body-sm font-semibold text-white">Fernanda Lima</p>
+            <p class="text-label-md text-slate-400">Jeep Compass Diesel</p>
+          </div>
+        </div>
+
+        <div class="bg-card-bg border border-card-border p-6 rounded-md space-y-4">
+          <div class="flex text-warning">
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &#39;FILL&#39; 1;">star</span>
+          </div>
+          <p class="text-body-sm text-slate-300 italic" data-design-text-token="body-sm">
+            &#34;Troca do kit de embreagem e revisão dos freios. O carro voltou macio e com garantia por escrito. Recomendo de olhos fechados para quem cuida do carro.&#34;
+          </p>
+          <div class="pt-2 border-t border-card-border">
+            <p class="text-body-sm font-semibold text-white">Carlos Eduardo Santos</p>
+            <p class="text-label-md text-slate-400">Volkswagen Golf TSI</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WORKSHOP DETAILS & CONTACT LOCATION -->
+  <section id="contato" class="py-16 bg-panel-bg border-t border-secondary">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shrink-0">
+            <span class="material-symbols-outlined text-[24px]">location_on</span>
+          </div>
+          <div>
+            <h4 class="font-headline text-headline-sm font-bold text-white uppercase mb-1">Localização</h4>
+            <p class="text-body-sm text-slate-300">Av. das Nações Unidas, 1420 - Box 4</p>
+            <p class="text-label-md text-slate-400">Fácil acesso com estacionamento seguro</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shrink-0">
+            <span class="material-symbols-outlined text-[24px]">schedule</span>
+          </div>
+          <div>
+            <h4 class="font-headline text-headline-sm font-bold text-white uppercase mb-1">Horário de Atendimento</h4>
+            <p class="text-body-sm text-slate-300">Segunda a Sexta: 07h30 às 18h30</p>
+            <p class="text-label-md text-slate-400">Sábados: 08h00 às 13h00</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shrink-0">
+            <span class="material-symbols-outlined text-[24px]">support_agent</span>
+          </div>
+          <div>
+            <h4 class="font-headline text-headline-sm font-bold text-white uppercase mb-1">Canais Diretos</h4>
+            <p class="text-body-sm text-slate-300">contato@autocare.com.br</p>
+            <p class="text-label-md text-primary font-semibold">Plantão WhatsApp: (11) 98765-4321</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-footer-bg py-12 border-t border-card-border">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- LOGO FOOTER -->
+      <div class="flex items-center gap-3">
+        <div class="text-primary">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+          </svg>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="font-headline text-headline-sm font-bold text-white uppercase">AUTO</span>
+          <span class="font-headline text-headline-sm font-bold text-primary uppercase">CARE</span>
+        </div>
+      </div>
+
+      <!-- COPYRIGHT -->
+      <div class="text-body-sm text-slate-300 text-center md:text-left">
+        © 2026 AUTO CARE Centro Automotivo Multimarcas Ltda. Todos os direitos reservados.
+      </div>
+
+      <!-- SECURITY / PAYMENT BADGES -->
+      <div class="flex items-center gap-4 text-label-md text-slate-400">
+        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-primary">security</span> Diagnóstico Certificado</span>
+        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-primary">credit_card</span> Até 12x Sem Juros</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE MODAL FOR AGENDAMENTO -->
+  <div id="schedule-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="relative w-full max-w-lg bg-card-bg border border-card-border rounded-lg shadow-2xl p-6 sm:p-8 text-white space-y-6">
+      
+      <!-- MODAL HEADER -->
+      <div class="flex items-start justify-between border-b border-card-border pb-4">
+        <div>
+          <div class="flex items-center gap-2 text-primary text-label-md uppercase font-bold tracking-wider mb-1">
+            <span class="material-symbols-outlined text-[16px]">build_circle</span>
+            <span>Agendamento de Serviço</span>
+          </div>
+          <h3 id="modal-service-title" class="font-headline text-headline-md font-bold text-white uppercase">REVISÃO DE CARRO PROGRAMÁVEL</h3>
+        </div>
+        <button type="button" onclick="closeScheduleModal()" class="text-slate-400 hover:text-white p-1 rounded hover:bg-secondary transition-colors">
+          <span class="material-symbols-outlined text-[24px]">close</span>
+        </button>
+      </div>
+
+      <!-- FORM FIELDS -->
+      <form id="schedule-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+        
+        <div>
+          <label class="block text-label-md font-semibold text-slate-300 uppercase mb-1">Nome Completo</label>
+          <input type="text" required placeholder="Ex: Carlos Eduardo" class="w-full bg-dark-surface border border-secondary rounded px-3.5 py-2.5 text-body-sm text-white focus-visible:ring-2 focus-visible:ring-primary focus:border-primary transition-colors">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-label-md font-semibold text-slate-300 uppercase mb-1">WhatsApp / Telefone</label>
+            <input type="tel" required placeholder="(11) 99999-9999" class="w-full bg-dark-surface border border-secondary rounded px-3.5 py-2.5 text-body-sm text-white focus-visible:ring-2 focus-visible:ring-primary focus:border-primary transition-colors">
+          </div>
+          <div>
+            <label class="block text-label-md font-semibold text-slate-300 uppercase mb-1">Data Desejada</label>
+            <input type="date" required class="w-full bg-dark-surface border border-secondary rounded px-3.5 py-2.5 text-body-sm text-white focus-visible:ring-2 focus-visible:ring-primary focus:border-primary transition-colors">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-label-md font-semibold text-slate-300 uppercase mb-1">Modelo / Ano do Carro</label>
+            <input type="text" required placeholder="Ex: Civic 2021" class="w-full bg-dark-surface border border-secondary rounded px-3.5 py-2.5 text-body-sm text-white focus-visible:ring-2 focus-visible:ring-primary focus:border-primary transition-colors">
+          </div>
+          <div>
+            <label class="block text-label-md font-semibold text-slate-300 uppercase mb-1">Horário Preferencial</label>
+            <select class="w-full bg-dark-surface border border-secondary rounded px-3.5 py-2.5 text-body-sm text-white focus-visible:ring-2 focus-visible:ring-primary focus:border-primary transition-colors">
+              <option value="manha">Manhã (08h00 - 11h30)</option>
+              <option value="tarde">Tarde (13h00 - 17h00)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-label-md font-semibold text-slate-300 uppercase mb-1">Observações / Sintomas do Carro (Opcional)</label>
+          <textarea rows="2" placeholder="Ex: Barulho na suspensão ao passar em lombadas ou luz da injeção acesa" class="w-full bg-dark-surface border border-secondary rounded px-3.5 py-2.5 text-body-sm text-white focus-visible:ring-2 focus-visible:ring-primary focus:border-primary transition-colors resize-none"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-3 border-t border-card-border">
+          <button type="button" onclick="closeScheduleModal()" class="px-4 py-2.5 text-body-sm text-slate-400 hover:text-white rounded transition-colors">
+            <span data-design-text-token="body-sm">Cancelar</span>
+          </button>
+          <button type="submit" class="px-6 py-2.5 bg-primary hover:bg-accent text-on-primary font-bold text-label-md uppercase rounded transition-all shadow-lg active:scale-95 cursor-pointer">
+            <span data-design-text-token="label-md">Confirmar Pré-Agendamento</span>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- SUCCESS STATE MESSAGE (HIDDEN INITIALLY) -->
+      <div id="modal-success" class="hidden text-center py-6 space-y-4">
+        <div class="w-16 h-16 bg-success/20 text-success rounded-full flex items-center justify-center mx-auto">
+          <span class="material-symbols-outlined text-[36px]">check_circle</span>
+        </div>
+        <h4 class="font-headline text-headline-md font-bold text-white">Agendamento Enviado com Sucesso!</h4>
+        <p class="text-body-md text-slate-300">
+          Recebemos sua solicitação. Nosso consultor técnico entrará em contato pelo seu WhatsApp em instantes para confirmar o box disponível.
+        </p>
+        <button type="button" onclick="closeScheduleModal()" class="px-6 py-2.5 bg-primary text-on-primary font-bold text-label-md rounded cursor-pointer">
+          <span data-design-text-token="label-md">Fechar</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INTERACTIVE SCRIPTS -->
+  <script>
+    const modal = document.getElementById('schedule-modal');
+    const modalTitle = document.getElementById('modal-service-title');
+    const scheduleForm = document.getElementById('schedule-form');
+    const modalSuccess = document.getElementById('modal-success');
+
+    function openScheduleModal(serviceName) {
+      if (serviceName) {
+        modalTitle.textContent = serviceName.toUpperCase();
+      }
+      scheduleForm.classList.remove('hidden');
+      modalSuccess.classList.add('hidden');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeScheduleModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('btn-open-modal').addEventListener('click', () => {
+      openScheduleModal('Revisão Geral Programável');
+    });
+
+    // Close on click backdrop
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeScheduleModal();
+    });
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      scheduleForm.classList.add('hidden');
+      modalSuccess.classList.remove('hidden');
+    }
+
+    // Dynamic km package selector
+    const kmPackages = {
+      10: {
+        price: 'R$ 380,00',
+        time: 'Estimativa: 2h30',
+        items: [
+          'Substituição de Óleo 100% Sintético + Filtro de Óleo',
+          'Filtro de Ar do Motor e Filtro do Ar Condicionado',
+          'Inspeção de pastilhas de freio, discos e fluido DOT 4',
+          'Scanner eletrônico de injeção e sensores'
+        ]
+      },
+      30: {
+        price: 'R$ 540,00',
+        time: 'Estimativa: 3h30',
+        items: [
+          'Todos os itens da revisão de 10.000 km',
+          'Substituição do Filtro de Combustível',
+          'Alinhamento a laser 3D e balanceamento de rodas',
+          'Limpeza e descarbonização do corpo de borboleta (TBI)',
+          'Verificação de líquido de arrefecimento e teste de estanqueidade'
+        ]
+      },
+      50: {
+        items: [
+          'Revisão completa do sistema de arrefecimento (bomba d’água e mangueiras)',
+          'Troca de velas de ignição (Iridium / Platinum)',
+          'Substituição completa do fluido de freio por sucção',
+          'Inspeção de amortecedores, buchas e bandejas de suspensão',
+          'Diagnóstico computadorizado de transmissão e bateria'
+        ]
+      },
+      80: {
+        price: 'R$ 1.450,00',
+        time: 'Estimativa: 6h00',
+        items: [
+          'Substituição da correia dentada ou verificação de corrente de comando',
+          'Troca de óleo do câmbio / fluido de transmissão automática',
+          'Revisão profunda do trem de força, semieixos e homocinéticas',
+          'Substituição de correias de acessórios e esticadores',
+          'Relatório técnico completo para certificação de revenda'
+        ]
+      }
+    };
+
+    function selectKm(km, btn) {
+      document.querySelectorAll('.km-btn').forEach(b => {
+        b.classList.remove('bg-primary', 'text-black');
+        b.classList.add('bg-secondary', 'text-slate-300');
+      });
+      btn.classList.add('bg-primary', 'text-black');
+      btn.classList.remove('bg-secondary', 'text-slate-300');
+
+      const pkg = kmPackages[km];
+      document.getElementById('km-price').textContent = pkg.price;
+      const listEl = document.getElementById('km-list');
+      listEl.innerHTML = pkg.items.map(it => `
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+          <span>${it}</span>
+        </li>
+      `).join('');
+    }
+  </script>
+
+</body></html>
